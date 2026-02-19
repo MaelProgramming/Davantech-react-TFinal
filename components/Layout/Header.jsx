@@ -4,12 +4,13 @@ import { Menu, X, Search, ShoppingBag } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 
-const { totalItems } = useCart();
+
 
 const Header = () => {
   // On récupère userData qui contient le username et les credits de Firestore
   const { user, userData, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { totalItems } = useCart();
   const location = useLocation();
   const navigate = useNavigate();
 
