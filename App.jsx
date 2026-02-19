@@ -12,6 +12,7 @@ import AboutContact from './pages/About';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
 import Wallet from "./pages/Wallet";
+import Profile from "./pages/Profile";
 
 const MainLayout = () => {
   return (
@@ -53,6 +54,7 @@ const App = () => {
               <Route path="/product/:id" element={<ProductDetail />} />
               <Route path='/about' element={<AboutContact />} /> 
               <Route path= "/cart" element={<Cart />} />
+              <Route path = "/profile" element = {<Profile />} />
             </Route>
 
             <Route path="/" element={<Navigate to="/home" replace />} />
