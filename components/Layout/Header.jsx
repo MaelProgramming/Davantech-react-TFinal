@@ -52,6 +52,7 @@ const Header = () => {
             <nav className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 font-semibold text-gray-700">
                 <Link to="/home" className={`hover:text-orange-600 ${location.pathname === '/home' ? 'text-orange-600' : ''}`}>Inicio</Link>
                 <Link to="/catalog" className={`hover:text-orange-600 ${location.pathname === '/catalog' ? 'text-orange-600' : ''}`}>Catalogo</Link>
+                <Link to="/wallet" className={`hover:text-orange-600 ${location.pathname === '/catalog' ? 'text-orange-600' : ''}`}>Wallet</Link>
             </nav>
             
             <div className="flex items-center space-x-4">

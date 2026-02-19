@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'; // Importación vital para que no dé e
 const Cart = () => {
   const { user } = useAuth(); 
   
-  // Definimos el estado. Asegúrate de que el nombre coincida exactamente: cartItems
   const [cartItems, setCartItems] = useState([
     { id: 1, name: 'Smartphone Davantech G1', price: 599, quantity: 1, image: 'https://via.placeholder.com/80' },
     { id: 2, name: 'Auriculares Pro', price: 120, quantity: 2, image: 'https://via.placeholder.com/80' }
@@ -52,7 +51,6 @@ const Cart = () => {
               <span className="text-blue-600">{total.toFixed(2)}€</span>
             </div>
 
-            {/* El frontend reacciona al estado del usuario (Requisito Fase 2) */}
             {user ? (
               <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-all duration-300 transform hover:scale-[1.02] active:scale-95 shadow-lg">
                 Finalizar Compra

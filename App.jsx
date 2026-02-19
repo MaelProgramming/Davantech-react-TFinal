@@ -11,6 +11,7 @@ import Catalog from './pages/Catalog';
 import AboutContact from './pages/About';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
+import Wallet from "./pages/Wallet";
 
 const MainLayout = () => {
   return (
@@ -48,6 +49,7 @@ const App = () => {
             <Route element={<MainLayout />}>
               <Route path="/home" element={<Home />} />
               <Route path="/catalog" element={<Catalog />} />
+              <Route path="/wallet" element={<Wallet />} />
               <Route path="/product/:id" element={<ProductDetail />} />
               <Route path='/about' element={<AboutContact />} /> 
               <Route path= "/cart" element={<Cart />} />
