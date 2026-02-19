@@ -143,14 +143,6 @@ const Home = () => {
       <Testimonials />
       <AboutContact />
 
-      {/* Bouton SECRET de Sync Firebase pour Mael (à virer avant prod) */}
-      <button 
-        onClick={uploadProductsToFirebase}
-        className="fixed bottom-6 left-6 bg-gray-900/10 hover:bg-orange-600 text-transparent hover:text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm group"
-        title="Sync Firebase"
-      >
-        <Database className="w-5 h-5" />
-      </button>
     </div>
   );
 };
