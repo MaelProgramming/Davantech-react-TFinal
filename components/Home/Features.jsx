@@ -14,7 +14,7 @@ const Features = () => {
       desc: "Con OneUI y Android 16, siente la mejor experiencia hacia Usuario de cualquier android."
     },
     {
-      img: "https://images.unsplash.com/photo-1695582313364-c2c65a4c6a66?auto=format&fit=crop&q=80&w=800",
+      img: "../img/twitter-1.png",
       title: "La mejor IA del mercado",
       desc: "Aprovecha el mejor Galaxy AI para usar todo el potencial de la inteligencia Artificial."
     }

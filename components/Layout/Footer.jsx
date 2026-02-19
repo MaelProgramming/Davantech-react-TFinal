@@ -21,20 +21,10 @@ const Footer = () => {
             <nav className="flex flex-col md:flex-row gap-6 text-sm font-medium text-gray-600">
                 <Link to="/home" className="hover:text-orange-600">Inicio</Link>
                 <Link to="/catalog" className="hover:text-orange-600">Catalogo</Link>
-                <a href="#about" className="hover:text-orange-600">Sobre Nosotros</a>
-                <a href="#" className="hover:text-orange-600">Carrito</a>
+                <Link to="/cart" className="hover:text-orange-600">Carrito</Link>
             </nav>
         </div>
         
-        <div className="flex justify-between items-center border-t border-gray-100 pt-8">
-            <div className="flex space-x-4 text-gray-400">
-              <a href="#" className="hover:text-gray-600 transition-colors">Facebook</a>
-              <a href="#" className="hover:text-gray-600 transition-colors">Linkedin</a>
-              <a href="#" className="hover:text-gray-600 transition-colors">Youtube</a>
-              <a href="#" className="hover:text-gray-600 transition-colors">Instagram</a>
-            </div>
-            <p className="text-xs text-gray-400">&copy; {new Date().getFullYear()} Davantech. Todos los derechos reservados.</p>
-        </div>
       </div>
     </footer>
   );
