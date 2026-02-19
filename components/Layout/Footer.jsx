@@ -28,10 +28,10 @@ const Footer = () => {
         
         <div className="flex justify-between items-center border-t border-gray-100 pt-8">
             <div className="flex space-x-4 text-gray-400">
-              <a href="#" className="hover:text-gray-600 transition-colors"><Facebook className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-gray-600 transition-colors"><Linkedin className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-gray-600 transition-colors"><Youtube className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-gray-600 transition-colors"><Instagram className="w-5 h-5" /></a>
+              <a href="#" className="hover:text-gray-600 transition-colors">Facebook</a>
+              <a href="#" className="hover:text-gray-600 transition-colors">Linkedin</a>
+              <a href="#" className="hover:text-gray-600 transition-colors">Youtube</a>
+              <a href="#" className="hover:text-gray-600 transition-colors">Instagram</a>
             </div>
             <p className="text-xs text-gray-400">&copy; {new Date().getFullYear()} Davantech. Todos los derechos reservados.</p>
         </div>

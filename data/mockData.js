@@ -1,6 +1,4 @@
-import { Product } from '../types';
-
-export const products: Product[] = [
+export const products = [
   {
     id: 's25-ultra',
     title: 'Samsung Galaxy S25 Ultra',

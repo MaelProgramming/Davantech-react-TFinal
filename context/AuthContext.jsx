@@ -1,15 +1,14 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { User, AuthContextType } from '../types';
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+const AuthContext = createContext(undefined);
+export const AuthProvider  = ({ children }) => {
+  const [user, setUser] = useState(null);
 
-  const login = (username: string) => {
+  const login = (username) => {
     setUser({ username });
   };
-
+  
   const logout = () => {
     setUser(null);
   };
