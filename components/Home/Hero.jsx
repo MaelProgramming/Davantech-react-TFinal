@@ -1,7 +1,9 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
+  const productId = "s25-ultra";
   return (
     <section className="relative bg-gray-200 py-12 md:py-20 overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
@@ -17,9 +19,12 @@ const Hero = () => {
             
             <p className="text-2xl font-bold text-gray-900 mb-8">1.500 €</p>
             
-            <button className="bg-blue-800 hover:bg-blue-900 text-white text-lg font-medium px-10 py-3 rounded-lg shadow-lg transition-transform active:scale-95">
+           <Link 
+              to={`/product/${productId}`} 
+              className="inline-block bg-blue-800 hover:bg-blue-900 text-white text-lg font-medium px-10 py-3 rounded-lg shadow-lg transition-transform active:scale-95"
+            >
               Comprar ahora
-            </button>
+            </Link>
           </div>
 
           <div className="md:w-6/12 flex justify-center relative p-8 bg-gradient-to-b from-transparent to-gray-50/50 rounded-3xl">
