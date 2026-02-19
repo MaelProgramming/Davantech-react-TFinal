@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext'; // Ne pas oublier !
 import { Star, ShoppingCart, ArrowLeft, Send } from 'lucide-react';
 
+
 const ProductDetail = () => {
   const { id } = useParams();
   const product = products.find((p) => p.id === id);
@@ -87,11 +88,11 @@ const ProductDetail = () => {
                </div>
                
                <button 
-                 onClick={() => addToCart(product)}
-                 className="w-full sm:w-auto bg-orange-600 hover:bg-orange-700 text-white px-10 py-5 rounded-2xl font-black text-lg flex items-center justify-center shadow-xl shadow-orange-500/30 transition-all hover:scale-105 active:scale-95"
-               >
-                 <ShoppingCart className="w-6 h-6 mr-3" /> Añadir al Carrito
-               </button>
+      onClick={() => addToCart(product)} // <--- CONEXIÓN AQUÍ
+      className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-4 rounded-xl font-bold flex items-center shadow-lg shadow-orange-500/20 transition-all hover:scale-105 active:scale-95"
+    >
+      <ShoppingCart className="w-5 h-5 mr-2" /> Añadir al Carrito
+    </button>
              </div>
           </div>
         </div>

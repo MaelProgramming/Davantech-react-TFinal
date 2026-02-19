@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate, useSearchParams  } from 'react-router-dom';
 import { Menu, X, Search, ShoppingBag } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useCart } from '../../context/CartContext';
 
+const { totalItems } = useCart();
 
 const Header = () => {
   // On récupère userData qui contient le username et les credits de Firestore
@@ -96,9 +98,9 @@ const Header = () => {
                   className="bg-orange-600 hover:bg-orange-700 text-white p-2.5 rounded-full transition-all relative"
                 >
                   <ShoppingBag className="w-5 h-5" />
-                  <span className="absolute -top-1 -right-1 bg-blue-800 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white">
-                    0
-                  </span>
+                  <span className="absolute -top-1 -right-1 bg-blue-800 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
+  {totalItems}
+</span>
                 </Link>
             </div>
           </div>
