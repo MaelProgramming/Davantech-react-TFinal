@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams  } from 'react-router-dom';
 import { Menu, X, Search, ShoppingBag } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+
 
 const Header = () => {
   // On récupère userData qui contient le username et les credits de Firestore
@@ -13,6 +14,19 @@ const Header = () => {
   const handleLogout = async () => {
     await logout();
     navigate('/login');
+  };
+
+  const [searchParams] = useSearchParams(); // Para leer la búsqueda actual de la URL
+  
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    // Si no estamos en el catálogo, redirigimos allí con el parámetro
+    if (location.pathname !== '/catalog') {
+      navigate(`/catalog?search=${value}`);
+    } else {
+      // Si ya estamos en catálogo, actualizamos la URL sin crear mil entradas en el historial
+      navigate(`/catalog?search=${value}`, { replace: true });
+    }
   };
 
   return (
@@ -40,10 +54,12 @@ const Header = () => {
           <div className="w-full md:max-w-md relative order-3 md:order-2">
             <div className="relative">
                 <input 
-                    type="text" 
-                    placeholder="Buscar productos..." 
-                    className="w-full bg-gray-100 border-transparent focus:bg-white focus:ring-2 focus:ring-orange-500 rounded-full py-2.5 pl-10 pr-4 outline-none transition-all text-sm"
-                />
+    type="text" 
+    placeholder="Buscar productos..." 
+    onChange={handleSearch} // CAPTURA EL CAMBIO
+    value={searchParams.get('search') || ''} // MANTIENE EL TEXTO SINCRONIZADO
+    className="w-full bg-gray-100 border-transparent focus:bg-white focus:ring-2 focus:ring-orange-500 rounded-full py-2.5 pl-10 pr-4 outline-none transition-all text-sm"
+/>
                 <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             </div>
           </div>

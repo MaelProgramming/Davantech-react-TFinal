@@ -1,76 +1,77 @@
-import React from 'react';
-import { useProducts } from '../components/useProduct';
-import { useCart } from '../context/CartContext'; // On importe le hook du panier
-import { ShoppingCart, Star } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams, Link } from 'react-router-dom';
+import { db } from "../services/firebase";
+import { collection, getDocs } from 'firebase/firestore';
+import { Star, Loader2 } from 'lucide-react';
 
 const Catalog = () => {
-  const { items, loading } = useProducts();
-  const { addToCart } = useCart(); // On récupère la fonction d'ajout
+  const [searchParams] = useSearchParams();
+  const searchTerm = searchParams.get('search') || '';
+  
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // 1. Descargamos los datos de Firebase
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        const docs = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setProducts(docs);
+      } catch (error) {
+        console.error("Error al cargar Firebase:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProducts();
+  }, []);
+
+  // 2. Filtramos los productos locales con la búsqueda de la URL
+  const filteredProducts = products.filter(product => 
+    product.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.category?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (loading) return (
-    <div className="flex justify-center items-center min-h-[400px]">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-600"></div>
+    <div className="min-h-screen flex items-center justify-center">
+      <Loader2 className="animate-spin w-10 h-10 text-orange-600" />
     </div>
   );
 
   return (
-    <section className="py-12 bg-gray-50">
+    <div className="bg-gray-50 min-h-screen py-12">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-black text-gray-900 mb-8 tracking-tight">
-          Últimas <span className="text-orange-600">Novedades</span>
+        <h2 className="text-3xl font-black mb-10">
+            {searchTerm ? `Resultados para: "${searchTerm}"` : 'Catálogo Completo'}
         </h2>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {items.map((product) => (
-            <div key={product.id} className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group">
-              {/* Image Container */}
-              <div className="relative h-64 overflow-hidden bg-gray-200">
-                <img 
-                  src={product.image} 
-                  alt={product.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="bg-white/90 backdrop-blur-sm text-gray-900 text-[10px] font-bold px-3 py-1 rounded-full shadow-sm uppercase tracking-widest">
-                    {product.category}
-                  </span>
-                </div>
-              </div>
 
-              {/* Content */}
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-gray-900 leading-tight">{product.title}</h3>
-                  <div className="flex items-center text-orange-500 bg-orange-50 px-2 py-1 rounded-lg">
-                    <Star className="w-3 h-3 fill-current" />
-                    <span className="text-xs font-bold ml-1">{product.rating}</span>
+        {filteredProducts.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProducts.map((product) => (
+              <Link key={product.id} to={`/product/${product.id}`} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-orange-500 transition-all shadow-sm hover:shadow-xl">
+                <div className="aspect-square p-6">
+                  <img src={product.image} alt={product.title} className="w-full h-full object-contain transition-transform group-hover:scale-110" />
+                </div>
+                <div className="p-6 border-t border-gray-50">
+                  <h3 className="font-bold text-xl">{product.title}</h3>
+                  <div className="flex justify-between items-center mt-4">
+                    <span className="text-2xl font-black text-gray-900">{product.price}€</span>
+                    <div className="flex items-center text-yellow-500 font-bold text-sm">
+                       <Star className="w-4 h-4 fill-current mr-1" /> {product.rating}
+                    </div>
                   </div>
                 </div>
-                
-                <p className="text-gray-500 text-sm line-clamp-2 mb-6">
-                  {product.description}
-                </p>
-
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-xs text-gray-400 block uppercase font-bold tracking-tighter">Precio</span>
-                    <span className="text-2xl font-black text-gray-900">${product.price.toLocaleString()}</span>
-                  </div>
-                  
-                  {/* Bouton connecté au CartContext */}
-                  <button 
-                    onClick={() => addToCart(product)}
-                    className="bg-orange-600 hover:bg-orange-700 text-white p-3 rounded-2xl shadow-lg shadow-orange-500/30 transition-all transform active:scale-90 hover:rotate-3"
-                  >
-                    <ShoppingCart className="w-6 h-6" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed">
+            <p className="text-gray-400 text-xl font-medium">No se encontró ningún "{searchTerm}".</p>
+          </div>
+        )}
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -3,10 +3,9 @@ import { useAuth } from '../context/AuthContext';
 import { Wallet as WalletIcon, PlusCircle, History, ArrowUpRight } from 'lucide-react';
 
 const Wallet = () => {
-    const { user } = useAuth(); // Para mostrar el nombre del dueño de la cartera
+    const { user } = useAuth();
     
-    // Estado para el saldo actual y la cantidad a recargar
-    const [balance, setBalance] = useState(150.00); // Saldo inicial de ejemplo
+    const [balance, setBalance] = useState(150.00); 
     const [rechargeAmount, setRechargeAmount] = useState('');
     const [message, setMessage] = useState('');
 
@@ -19,12 +18,10 @@ const Wallet = () => {
             return;
         }
 
-        // Lógica de suma
         setBalance(prev => prev + amount);
         setRechargeAmount('');
         setMessage(`¡Recarga de ${amount}€ exitosa!`);
         
-        // Limpiar mensaje después de 3 segundos
         setTimeout(() => setMessage(''), 3000);
     };
 
