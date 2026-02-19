@@ -1,49 +1,44 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { 
-  signInWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged 
-} from 'firebase/auth';
-import { auth } from '../services/firebase'; // Importe ton instance Firebase config
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../services/firebase';
 
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null); // Stocke username, credits, etc.
   const [loading, setLoading] = useState(true);
+  
 
-  // 1. Le "Listener" : C'est Firebase qui décide si le user est là
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false); // On arrête de charger une fois qu'on a la réponse
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        // On récupère le doc Firestore correspondant à l'UID du mec connecté
+        const docRef = doc(db, "users", currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          setUserData(docSnap.data()); // C'est ici qu'on récupère "Mael"
+        }
+        setUser(currentUser);
+      } else {
+        setUser(null);
+        setUserData(null);
+      }
+      setLoading(false);
     });
-    return () => unsubscribe(); // Nettoyage
+    return () => unsubscribe();
   }, []);
 
-  // 2. Fonctions Firebase réelles
-  const login = async (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
-  };
-
-  const logout = async () => {
-    return signOut(auth);
-  };
-
-  // On n'affiche rien tant que Firebase n'a pas dit si le mec est co ou pas
-  if (loading) return null; 
+  const login = (email, password) => signInWithEmailAndPassword(auth, email, password);
+  const logout = () => signOut(auth);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, userData, login, logout }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
+export const useAuth = () => useContext(AuthContext);
