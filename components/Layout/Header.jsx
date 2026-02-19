@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Smartphone, Menu, X, Search, ShoppingBag } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
+
 const Header = () => {
   const { user, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +25,7 @@ const Header = () => {
                  <div className="flex space-x-0.5 mb-0.5">
                     <span className="bg-orange-500 text-white text-[10px] font-bold px-1 rounded-sm">mi</span>
                     <span className="bg-blue-800 text-white text-[10px] font-bold px-1 rounded-sm">SAMSUNG</span>
-                    <span className="bg-gray-500 text-white text-[10px] font-bold px-1 rounded-sm"></span>
+                    <span className="bg-gray-500 text-white text-[10px] font-bold px-1 rounded-sm">Apple</span>
                  </div>
                  <span className="text-2xl font-black text-gray-800 tracking-tight">DAVAN<span className="text-gray-600">TECH</span></span>
               </div>
@@ -71,9 +72,12 @@ const Header = () => {
                     <Link to="/login" className="text-sm font-medium hover:text-orange-600">Login</Link>
                 )}
                 
-                <button className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-md font-bold transition-colors shadow-sm flex items-center">
-                    Carrito
-                </button>
+                <Link 
+  to="/cart" 
+  className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-md font-bold transition-colors shadow-sm flex items-center"
+>
+  Carrito
+</Link>
             </div>
           </div>
 

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import Hero from '../components/Home/Hero';
 import Features from '../components/Home/Features';
 import { Apple } from 'lucide-react';
-import { useBack } from '../components/hooks/useBack';
 
 // Subcomponents defined here for simplicity of the request, 
 // in a larger app they would be in separate files.
@@ -22,7 +21,6 @@ const BrandStrips = () => (
   </div>
 );
 
-const backend = useBack('http://localhost:8080')
 
 const BrandInfo = () => (
   <section className="py-16 bg-white">
