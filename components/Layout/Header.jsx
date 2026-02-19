@@ -71,46 +71,27 @@ const Header = () => {
             <nav className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 font-semibold text-gray-700">
               <Link to="/home" className={`hover:text-orange-600 ${location.pathname === '/home' ? 'text-orange-600' : ''}`}>Inicio</Link>
               <Link to="/catalog" className={`hover:text-orange-600 ${location.pathname === '/catalog' ? 'text-orange-600' : ''}`}>Catalogo</Link>
-              <Link to="/wallet" className={`hover:text-orange-600 ${location.pathname === '/wallet' ? 'text-orange-600' : ''}`}>Wallet</Link>
+              <Link to="/wallet" className={`hover:text-orange-600 ${location.pathname === '/catalog' ? 'text-orange-600' : ''}`}>Wallet</Link>
             </nav>
 
             <div className="flex items-center space-x-4">
-              {/* Sustituye el bloque del usuario (líneas ~60 a ~75) por este: */}
               {user ? (
                 <div className="flex items-center bg-gray-50 rounded-full pl-2 pr-4 py-1 border border-gray-100">
-
-                  {/* 1. Link en la imagen de perfil (Avatar) */}
-                  <Link to="/profile" className="flex items-center">
-                    <div className="w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold mr-2 text-xs hover:bg-orange-700 transition-colors cursor-pointer">
-                      {userData?.username?.charAt(0).toUpperCase() || 'U'}
-                    </div>
-                  </Link>
-
+                  <Link to="/profile" className="flex items-center"><div className="w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold mr-2 text-xs">
+                    {userData?.username?.charAt(0).toUpperCase() || 'U'}
+                  </div></Link>
                   <div className="flex flex-col">
-                    {/* 2. Link en el nombre de usuario */}
-                    <Link to="/profile" className="hover:text-orange-600 transition-colors">
-                      <span className="text-sm font-bold text-gray-900 leading-tight">
-                        {userData?.username || 'Cargando...'}
-                      </span>
-                    </Link>
-
+                    <span className="text-sm font-bold text-gray-900 leading-tight">
+                      {userData?.username || 'Cargando...'}
+                    </span>
                     <div className="flex items-center space-x-2">
-                      <span className="font-black text-orange-600">
-                        {userData?.balance?.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' }) || '0,00 €'}
-                      </span>
-                      <button
-                        onClick={handleLogout}
-                        className="text-[10px] text-red-500 hover:underline"
-                      >
-                        Salir
-                      </button>
+                      <span className="font-black text-orange-600">{userData?.balance?.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' }) || '0,00 €'}</span>
+                      <button onClick={handleLogout} className="text-[10px] text-red-500 hover:underline">Salir</button>
                     </div>
                   </div>
                 </div>
               ) : (
-                <Link to="/login" className="text-sm font-bold text-gray-700 hover:text-orange-600 px-2">
-                  Login
-                </Link>
+                <Link to="/login" className="text-sm font-bold text-gray-700 hover:text-orange-600 px-2">Login</Link>
               )}
 
               <Link
