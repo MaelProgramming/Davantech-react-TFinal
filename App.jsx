@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Catalog from './pages/Catalog';
 import AboutContact from './pages/About';
 import ProductDetail from './pages/ProductDetail';
+import Cart from './pages/Cart';
 
 // Layout for main pages (Home, Catalog, etc.) - Includes Header & Footer
 const MainLayout = () => {
@@ -49,6 +50,7 @@ const App = () => {
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path='/about' element={<AboutContact />} /> 
+            <Route path= "/cart" element={<Cart />} />
           </Route>
 
           {/* Default Redirect */}
