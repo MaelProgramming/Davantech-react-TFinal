@@ -121,7 +121,6 @@ const Profile = () => {
                       <p className="font-black text-2xl text-gray-900 tracking-tighter">{order.total?.toFixed(2)}€</p>
                       <p className="text-[9px] font-black text-green-600 uppercase tracking-widest text-right">Pagado con Wallet</p>
                     </div>
-                    <ChevronRight className="text-gray-300 group-hover:text-orange-600 transition-colors" />
                   </div>
                 </div>
               ))
