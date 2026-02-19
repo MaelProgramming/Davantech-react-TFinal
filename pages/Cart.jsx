@@ -9,7 +9,7 @@ import { Loader2, CreditCard, ShoppingBag, Trash2 } from 'lucide-react';
 
 const Cart = () => {
   const { user, userData } = useAuth(); 
-  const { cart, totalPrice, removeFromCart, clearCart } = useCart();
+  const { cart, totalPrice, removeFromCart, clearCart } = useCart();8
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
