@@ -22,16 +22,16 @@ const Hero = () => {
             </button>
           </div>
 
-          <div className="md:w-6/12 flex justify-center relative">
-             <img 
-               src="../img/fee_786_587_png.webp" 
-               alt="Samsung Galaxy S25 Ultra" 
-               className="max-h-[500px] object-contain drop-shadow-2xl mix-blend-multiply"
-             />
+          <div className="md:w-6/12 flex justify-center relative p-8 bg-gradient-to-b from-transparent to-gray-50/50 rounded-3xl">
+          {/* Effet de halo derrière le téléphone pour le faire ressortir */}
+          <div className="absolute inset-0 bg-orange-500/5 blur-[120px] rounded-full transform scale-75"></div>
+            <img 
+              src="https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_149355015/fee_786_587_png" 
+              alt="Samsung Galaxy S25 Ultra" 
+              className="relative z-10 max-h-[500px] w-auto object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.15)] hover:scale-105 transition-transform duration-700 ease-out"
+            />
           </div>
-
-  
-        </div>
+          </div>
       </div>
     </section>
   );
