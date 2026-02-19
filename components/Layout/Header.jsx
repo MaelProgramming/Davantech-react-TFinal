@@ -82,9 +82,7 @@ const Header = () => {
                             {userData?.username || 'Cargando...'}
                          </span>
                          <div className="flex items-center space-x-2">
-                            <span className="text-[10px] font-bold text-orange-600 uppercase tracking-tighter">
-                               {userData?.credits || 0} Créditos
-                            </span>
+                            <span className="font-black text-orange-600">{userData?.balance?.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' }) || '0,00 €'}</span>
                             <button onClick={handleLogout} className="text-[10px] text-red-500 hover:underline">Salir</button>
                          </div>
                        </div>
