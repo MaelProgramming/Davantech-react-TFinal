@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext'; 
 import { Link, useNavigate } from 'react-router-dom';
-import { db } from '../services/firebase';
-import { doc, updateDoc, increment } from 'firebase/firestore';
 import { Loader2, CreditCard, ShoppingBag } from 'lucide-react';
 
 const Cart = () => {
@@ -12,33 +10,46 @@ const Cart = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // On utilise exclusivement balance maintenant
+  // Solde récupéré via le context (Firestore onSnapshot idéalement)
   const userBalance = userData?.balance || 0;
 
   const handleCheckout = async () => {
     if (!user) return navigate('/login');
     
+    // Check UX rapide avant de trigger le serveur
     if (userBalance < totalPrice) {
       alert(`⚠️ Fondos insuficientes. Necesitas ${(totalPrice - userBalance).toFixed(2)}€ más.`);
       return;
     }
 
     setLoading(true);
-    try {
-      const userRef = doc(db, "users", user.uid);
 
-      // Mise à jour de 'balance' dans Firestore
-      await updateDoc(userRef, {
-        balance: increment(-totalPrice) 
+    try {
+      const response = await fetch('https://pay-api-davantech.vercel.app/api/pay', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          userId: user.uid, // On envoie bien l'UID
+          amount: totalPrice 
+        }),
       });
 
-      clearCart();
+      const data = await response.json();
 
-      alert("🎉 ¡Compra realizada con éxito! Tu saldo ha sido actualizado.");
-      navigate('/home');
+      // On check si la réponse est OK (status 200) et si le flag success est là
+      if (response.ok && data.success) {
+        clearCart();
+        alert("🎉 ¡Compra realizada con éxito! Tu saldo ha sido actualizado.");
+        navigate('/home');
+      } else {
+        // On remonte l'erreur précise du serveur (ex: "Sueldo demasiado bajo")
+        throw new Error(data.error || "Error en el servidor de pagos");
+      }
     } catch (error) {
       console.error("Error al procesar compra:", error);
-      alert("Hubo un error al conectar con el servidor de pagos.");
+      alert(`❌ Error: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -46,9 +57,10 @@ const Cart = () => {
 
   return (
     <div className="container mx-auto p-6 min-h-screen bg-gray-50">
-      <h1 className="text-4xl font-black mb-8 text-gray-900 tracking-tighter">Tu Carrito</h1>
+      <h1 className="text-4xl font-black mb-8 text-gray-900 tracking-tighter italic uppercase">Tu Carrito</h1>
 
       <div className="flex flex-col lg:flex-row gap-8">
+        {/* LISTE DES PRODUITS */}
         <div className="lg:w-2/3 space-y-4">
           {cart.length > 0 ? ( 
             cart.map((item) => (
@@ -78,6 +90,7 @@ const Cart = () => {
           )}
         </div>
 
+        {/* RÉSUMÉ ET PAIEMENT */}
         <div className="lg:w-1/3">
           <div className="bg-gray-900 p-8 rounded-[2.5rem] shadow-2xl text-white sticky top-24 border border-white/10">
             <h2 className="text-2xl font-black mb-6 uppercase tracking-tighter">Resumen</h2>
